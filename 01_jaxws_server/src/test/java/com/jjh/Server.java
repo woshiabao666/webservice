@@ -5,6 +5,8 @@ package com.jjh;/**
  */
 
 import com.jjh.Impl.HelloServiceImpl;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 
 /**
@@ -24,6 +26,10 @@ public class Server {
 
         //设置服务类
         factoryBean.setServiceBean(new HelloServiceImpl());
+
+        //添加日志输入输出拦截器
+        factoryBean.getInInterceptors().add(new LoggingInInterceptor());
+        factoryBean.getOutFaultInterceptors().add(new LoggingOutInterceptor());
 
         //发布服务
         factoryBean.create();
